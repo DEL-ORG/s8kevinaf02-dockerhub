@@ -98,25 +98,16 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker tag devopseasylearning/alpha-app-01:latest s8kevinaf02/alpha-01:app1.1.2.0
+                        docker tag ${env.DOCKER_HUB_USERNAME}/${env.ALPHA_APPLICATION_01_REPO}:${params.APP1_TAG} s8kevinaf02/alpha-01:${params.APP1_TAG}
 
-                        docker tag devopseasylearning/alpha-app-02:latest s8kevinaf02/alpha-02:app2.1.2.0
+                        docker tag ${env.DOCKER_HUB_USERNAME}/${env.ALPHA_APPLICATION_02_REPO}:${params.APP2_TAG} s8kevinaf02/alpha-02:${params.APP2_TAG}
 
-                        docker push s8kevinaf02/alpha-01:app1.1.2.0
-                        docker push s8kevinaf02/alpha-02:app2.1.2.0
+                        docker push s8kevinaf02/alpha-01:${params.APP1_TAG}
+                        docker push s8kevinaf02/alpha-02:${params.APP2_TAG}
                     """
                 }
             }
         }
-        // stage('Deploying the application') {
-        //     steps {
-        //         script {
-        //             sh """
-        //                 docker run -itd -p ${params.PORT_ON_DOCKER_HOST}:80 --name ${params.CONTAINER_NAME} ${params.IMAGE_NAME}-application-02
-        //                 docker ps |grep ${params.CONTAINER_NAME}
-        //             """ 
-        //         }
-        //     }
-        // }
+
     }
 }
