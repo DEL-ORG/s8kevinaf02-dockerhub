@@ -98,9 +98,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker tag devopseasylearning/alpha-app-01:app1.1.2.0 s8kevinaf02/alpha-01:app1.1.2.0
+                        docker tag devopseasylearning/alpha-app-01:latest s8kevinaf02/alpha-01:app1.1.2.0
 
-                        docker tag devopseasylearning/alpha-app-02:app2.1.2.0 s8kevinaf02/alpha-02:app2.1.2.0
+                        docker tag devopseasylearning/alpha-app-02:latest s8kevinaf02/alpha-02:app2.1.2.0
 
                         docker push s8kevinaf02/alpha-01:app1.1.2.0
                         docker push s8kevinaf02/alpha-02:app2.1.2.0
