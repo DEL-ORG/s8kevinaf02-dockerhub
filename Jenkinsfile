@@ -1,6 +1,9 @@
 
 pipeline {
     agent any
+    triggers {
+        githubPush()
+    }
     environment {
         DOCKER_HUB_USERNAME="devopseasylearning"
         ALPHA_APPLICATION_01_REPO="alpha-app-01"
