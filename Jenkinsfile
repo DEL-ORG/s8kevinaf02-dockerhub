@@ -2,13 +2,13 @@
 pipeline {
     agent any
     environment {
-        DOCKER_HUB_USERNAME="s8kevinaf02"
-        ALPHA_APPLICATION_01_REPO="alpha-application-01"
-        ALPHA_APPLICATION_02_REPO="alpha-application-02"
-        DOCKER_CREDENTIAL_ID = 'docker-hub-credentials'
+        DOCKER_HUB_USERNAME="devopseasylearning"
+        ALPHA_APPLICATION_01_REPO="alpha-app-01"
+        ALPHA_APPLICATION_02_REPO="alpha-app-02"
+        DOCKER_CREDENTIAL_ID = 's8-test-docker-hub-auth'
     }
     parameters {
-        string(name: 'BRANCH_NAME', defaultValue: 's8kevinaf02', description: '')
+        string(name: 'BRANCH_NAME', defaultValue: 'main', description: '')
         string(name: 'APP1_TAG', defaultValue: 'latest', description: '')
         string(name: 'APP2_TAG', defaultValue: 'latest', description: '')
         string(name: 'PORT_ON_DOCKER_HOST', defaultValue: '', description: '')
@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     git credentialsId: 'jenkins-ssh-agents-private-key',
-                        url: 'git@github.com:DEL-ORG/s8-web-2.git',
+                        url: 'git@github.com:DEL-ORG/s8kevinaf02-dockerhub.git',
                         branch: "${params.BRANCH_NAME}"
                 }
             }
@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     // Login to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: "docker-hub-credentials", 
+                    withCredentials([usernamePassword(credentialsId: "s8-test-docker-hub-auth", 
                     usernameVariable: 'DOCKER_USERNAME', 
                     passwordVariable: 'DOCKER_PASSWORD')]) {
                         // Use Docker CLI to login
@@ -89,7 +89,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker login -u s8kevinaf02 -p dckr_pat_D_lEO8hxlSoof91Wn5BRnza2S8Q
+                        docker login -u s8kevinaf02 -p dckr_pat_cPhq181lgrRXzCYRBj-T4VytNfU
                     """
                 }
             }
@@ -98,9 +98,9 @@ pipeline {
             steps {
                 script {
                     sh """
-                        docker tag devopseasylearning/alpha-01:app1.1.1.0 s8kevinaf02/alpha-01:app1.1.2.0
+                        docker tag devopseasylearning/alpha-app-01:app1.1.2.0 s8kevinaf02/alpha-01:app1.1.2.0
 
-                        docker tag devopseasylearning/alpha-02:app2.1.1.0 s8kevinaf02/alpha-02:app2.1.2.0
+                        docker tag devopseasylearning/alpha-app-02:app2.1.2.0 s8kevinaf02/alpha-02:app2.1.2.0
 
                         docker push s8kevinaf02/alpha-01:app1.1.2.0
                         docker push s8kevinaf02/alpha-02:app2.1.2.0
